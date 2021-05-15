@@ -1,4 +1,5 @@
 .header{
+  background-color: #fff;
   .header-top{
     height: 60px;
     line-height: 60px;
@@ -15,12 +16,34 @@
     border-top: 1px solid #f9c700;
     .breadcrumb-title{
       text-align: center;
-    }
-    .date{
-      margin-right: 20px;
+      font-size: 18px;
+      &:after{
+        position: absolute;
+        content: '';
+        left: 73px;
+        top: 39px;
+        border-top: 9px solid #fff;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+
+      }
     }
     .weather{
+      font-size: 14px;
       text-align: right;
+      .date{
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+      .weather-img{
+        img{
+          height: 15px;
+        }
+      }
+      .weather-detail{
+        margin-left: 5px;
+        vertical-align: middle;
+      }
     }
   }
 }

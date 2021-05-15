@@ -1,4 +1,4 @@
-const menuList = [
+export default    [
     {
         title: '首页',
         key: 'admin/home'
@@ -6,7 +6,7 @@ const menuList = [
     {
         title: '社团管理',
         key: 'admin/community',
-        children:[
+        children: [
             {
                 title: '添加社团',
                 key: 'admin/community/addCommunity'
@@ -48,4 +48,5 @@ const menuList = [
         ]
     }
 ];
-export default menuList;
+
+

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import IRouter from "./router";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <IRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );

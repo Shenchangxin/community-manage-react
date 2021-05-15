@@ -1,12 +1,13 @@
-import React,{PureComponent} from 'react';
+import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import { Row, Col} from 'antd';
 import Header from "../../common/header";
 import Footer from "../../common/footer";
 import NavLeft from "../../components/NavLeft";
+import Home from "../../pages/home";
 import './common.less'
 
-class Admin extends PureComponent {
+class Admin extends Component {
     render() {
         return (
             <Row className="container">
@@ -16,7 +17,9 @@ class Admin extends PureComponent {
                 <Col span="20" className="main">
                     <Header/>
                     <Row className="content">
-                        Content
+                        {/*<Home/>*/}
+                        {this.props.children}
+
                     </Row>
                     <Footer/>
                 </Col>
