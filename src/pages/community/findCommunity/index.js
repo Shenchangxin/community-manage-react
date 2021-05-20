@@ -5,7 +5,7 @@ export default class FindCommunity extends React.Component {
     render() {
         return (
             <div>
-                addCommunity
+                findCommunity
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as constants from './constants';
-import {fromJS} from 'immutable';
+
 
 const loginSuccess = ()=>({
     type : constants.LOGIN_SUCCESS,
@@ -15,7 +15,8 @@ const loginError = (error)=>({
 
 export const loginRequest = (values) => {
     return (dispatch) => {
-        axios.post('localhost:8080/login',values).then((res) => {
+
+        axios.post('/user/login',values).then((res) => {
             const result = res.data.data;
             localStorage.setItem('token',result.token);
             const action = loginSuccess();

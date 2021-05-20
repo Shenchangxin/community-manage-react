@@ -1,7 +1,8 @@
 import React from 'react';
-import {BrowserRouter, Route,Switch,} from "react-router-dom";
+import {  HashRouter, Route, Switch,} from "react-router-dom";
 import App from "./App";
 import Login from "./pages/login";
+import Register from "./pages/register";
 import Admin from "./pages/admin";
 import AddCommunity from "./pages/community/addCommunity";
 import DeleteCommunity from "./pages/community/deleteCommunity";
@@ -11,6 +12,7 @@ import {Provider} from "react-redux";
 import store from "./store";
 import NoMatch from "./nomatch";
 import Home from "./pages/home";
+import Index from "./pages/index";
 
 export default class  IRouter extends React.Component {
     render() {
@@ -31,23 +33,26 @@ export default class  IRouter extends React.Component {
             //     </App>
             // </HashRouter>
             <Provider store={store}>
-                <BrowserRouter>
+                <HashRouter>
+                    <Switch>
                         <App>
                             <Route path="/login" component={Login} />
-                            <Route path="/admin" render={()=>
+                            <Route path="/register" component={Register} />
+                            <Route path="/index" component={Index} />
+                            <Route path="/" render={()=>
                                 <Admin>
-                                    <Home/>
-                                    <switch>
+                                    <Switch>
                                         <Route path="/admin/community/addCommunity" component={AddCommunity} />
-                                        <Route path="/admin/community/deleteCommunity" component={DeleteCommunity} />
+                                        <Route path="/admin/community/deleteCommunity"  component={DeleteCommunity} />
                                         <Route path="/admin/community/updateCommunity" component={UpdateCommunity} />
-                                        <Route path="/admin/community/findCommunity" component={FindCommunity} />
+                                        <Route path="/admin/community/findCommunity"  component={FindCommunity} />
 
-                                    </switch>
+                                    </Switch>
                                 </Admin>
                             } />
                         </App>
-                </BrowserRouter>
+                    </Switch>
+                </HashRouter>
             </Provider>
         )
     }

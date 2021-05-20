@@ -100,6 +100,8 @@ module.exports = function (proxy, allowedHost) {
       index: paths.publicUrlOrPath,
     },
     public: allowedHost,
+
+
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     before(app, server) {
@@ -126,5 +128,7 @@ module.exports = function (proxy, allowedHost) {
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware(paths.publicUrlOrPath));
     },
+
   };
+
 };

@@ -1,10 +1,13 @@
 import {combineReducers} from 'redux-immutable';
-import app from "../reducers/app";
-import user from "../reducers/user";
+import {reducer as loginReducer} from '../pages/login/store';
+import {reducer as registerReducer} from '../pages/register/store';
+
+
 
 const reducer = combineReducers({
-    app: app,
-    user: user
+    login: loginReducer,
+    register: registerReducer,
+
 });
 
 export default reducer;
