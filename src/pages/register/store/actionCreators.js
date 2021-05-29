@@ -15,7 +15,7 @@ const registerError = (error)=> ({
 export const registerRequest = (values) => {
     return (dispatch) => {
 
-        axios.post('/user/register',values).then((res) => {
+        axios.post('/api/user/register',values).then((res) => {
             const action = registerSuccess();
             dispatch(action);
         }).catch(error => {
@@ -24,3 +24,4 @@ export const registerRequest = (values) => {
         });
     }
 };
+

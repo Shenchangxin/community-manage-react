@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 
 class App extends Component {
 
+
     render(){
         return (
             //将store提供给<Provider></Provider>包裹的组件

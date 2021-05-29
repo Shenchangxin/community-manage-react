@@ -12,7 +12,7 @@ class Login extends Component {
     render () {
 
         const {handleLogin}  = this.props;
-        if(this.props.loginState){return <Redirect to='/index' />}
+        if(this.props.loginState){return <Redirect to='/admin' />}
         return (
             <div className="form">
                 <section className="login-content">
@@ -72,7 +72,6 @@ const mapState = (state) => ({
 });
 const mapDispatch = (dispatch) => ({
     handleLogin(values){
-        console.log(values);
         dispatch(actionCreators.loginRequest(values));
     }
 

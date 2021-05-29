@@ -2,21 +2,19 @@ import { fromJS } from 'immutable';
 import * as constants from './constants';
 
 const defaultState = fromJS ({
-    userInfo:[],
+    user:{},
+    username: '河畔一角',
+    roles:[],
     loginState: false,
     message:''
 });
 
-const loginRequest =(state,action)=>{
-    return state.merge({
-        'userInfo': action.userInfo,
-        'loginState': action.loginState
-    });
-};
 const loginSuccess =(state,action)=>{
     return state.merge({
-        'userInfo': action.userInfo,
-        'loginState': action.loginState
+        'user': action.user,
+        'loginState': action.loginState,
+        'username': action.user.sub,
+        'roles': action.roles
     });
 }
 const loginError =(state,action)=>{
@@ -28,8 +26,6 @@ const loginError =(state,action)=>{
 
 export default (state = defaultState,action) => {
     switch (action.type) {
-         case constants.LOGIN_REQUEST:
-             return loginRequest(state, action)
         case constants.LOGIN_SUCCESS:
             return loginSuccess(state,action)
         case constants.LOGIN_ERROR:

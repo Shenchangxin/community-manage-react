@@ -47,7 +47,7 @@ class Register extends Component {
 
     render(){
         const {handleRegister} = this.props;
-        if(this.props.registerState){return <Redirect to='/index' />}
+        if(this.props.registerState){return <Redirect to='/login' />}
         return(
             <div className="registerForm">
                 <h2>用户注册</h2>
@@ -143,7 +143,7 @@ class Register extends Component {
 
                     <Form.Item
                         name="department"
-                        label="s所属院系"
+                        label="所属院系"
                         hasFeedback
                         rules={[
                             {
@@ -171,7 +171,7 @@ class Register extends Component {
     }
 }
 const mapState = (state) => ({
-    loginState: state.getIn(['register','registerState'])
+    registerState: state.getIn(['register','registerState'])
 });
 const mapDispatch = (dispatch) => ({
     handleRegister(values){

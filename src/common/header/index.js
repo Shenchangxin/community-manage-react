@@ -3,16 +3,16 @@ import {Col, Row} from "antd";
 import './index.less';
 import Util from '../../utils/utils';
 import axios from '../../axios';
+import {connect} from "react-redux";
+import {actionCreators} from "../../pages/community/store";
 
-export default class Header extends React.Component {
-    state = {
-        sysTime:'',
+ class Header extends React.Component {
+     state = {
+         sysTime:'',
 
-    }
+     }
     componentWillMount() {
-        this.setState({
-            userName:'xxxx'
-        })
+
         setInterval(()=>{
             let sysTime = Util.formatDate(new Date().getTime());
             this.setState({
@@ -42,7 +42,7 @@ export default class Header extends React.Component {
             <div className="header">
                 <Row className="header-top">
                     <Col span="24">
-                        <span>欢迎，{this.state.userName}</span>
+                        <span>欢迎，{this.props.username}</span>
                         <a href="#">退出</a>
                     </Col>
                 </Row>
@@ -64,3 +64,11 @@ export default class Header extends React.Component {
         );
     }
 }
+const mapState = (state) => ({
+    username: state.getIn(['login','username']),
+
+});
+const mapDispatch = (dispatch) => ({
+
+})
+export default connect(mapState,mapDispatch)(Header);

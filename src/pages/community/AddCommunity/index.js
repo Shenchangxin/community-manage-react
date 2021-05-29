@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 
-class UpdateCommunity extends  Component{
+class AddCommunity extends  Component{
 
     render(){
         return(
             <div>
-                update
+                add
             </div>
         )
     }
 }
 
-export default UpdateCommunity;
+export default AddCommunity;
