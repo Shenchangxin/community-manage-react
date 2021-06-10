@@ -8,8 +8,8 @@ import {Provider} from "react-redux";
 import store from "./store";
 import Index from "./pages/index";
 import Community from "./pages/community";
-import UpdateCommunity from "./pages/community/updateCommunity";
-import AddCommunity from "./pages/community/AddCommunity";
+import User from "./pages/user";
+
 
 export default class  IRouter extends React.Component {
     render() {
@@ -23,12 +23,9 @@ export default class  IRouter extends React.Component {
                             <Route path="/index" component={Index} />
                             <Route path="/admin" render={()=>
                                 <Admin>
-
                                     <Switch>
-
                                         <Route exact path="/admin/community" component={Community} />
-
-                                        <Route exact path="/admin/community/addCommunity" component={AddCommunity} />
+                                        <Route exact path="/admin/user" component={User} />
 
                                     </Switch>
                                 </Admin>

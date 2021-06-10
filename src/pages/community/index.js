@@ -37,26 +37,6 @@ class Community extends Component {
                 ),
             },
 
-            // {
-            //     title: '社团类型',
-            //     key: 'type',
-            //     dataIndex: 'type',
-            //     render: type => (
-            //         <span>
-            //     {type.map(type => {
-            //         let color = type.length > 5 ? 'geekblue' : 'green';
-            //         if (type === 'loser') {
-            //             color = 'volcano';
-            //         }
-            //         return (
-            //             <Tag color={color} key={type}>
-            //                 {type.toUpperCase()}
-            //             </Tag>
-            //         );
-            //     })}
-            //   </span>
-            //         )
-            // },
 
             {
 
@@ -65,8 +45,8 @@ class Community extends Component {
                 render: (text,record) => (
 
                     <Space size="middle">
-                        <a onClick={()=> handleUpdate(record.id-1)}>修改</a>
-                        <a onClick={()=> handleDelete(record.id)}>删除</a>
+                        <Button onClick={()=> handleUpdate(record.id-1)}>修改</Button>
+                        <Button onClick={()=> handleDelete(record.id)}>删除</Button>
                     </Space>
 
                 ),
@@ -80,7 +60,7 @@ class Community extends Component {
         return(
             <div className="communityList">
 
-                <Card>
+                <Card style={{width: 1240}}>
                 <Form
 
                     name="advanced_search"
