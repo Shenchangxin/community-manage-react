@@ -4,7 +4,6 @@ import './index.less';
 import Util from '../../utils/utils';
 import axios from '../../axios';
 import {connect} from "react-redux";
-import {actionCreators} from "../../pages/community/store";
 
  class Header extends React.Component {
      state = {

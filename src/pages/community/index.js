@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {Table, Tag, Space, Form, Row, Col, Input, Button, Modal, Select, Card} from 'antd';
-import {actionCreators} from "../community/store";
+import {Table, Tag, Space, Form, Row, Col, Input, Button, Modal, Select, Card, message} from 'antd';
 import {Redirect} from "react-router-dom";
 import {PlusSquareOutlined} from "@ant-design/icons";
+import axios from "axios";
+import qs from "qs";
 
 
 
@@ -11,11 +11,111 @@ const { Option } = Select;
 
 class Community extends Component {
 
+    state = {
+        data:[],
+        getState: false,
+        message: '',
+        visible: false,
+        loading: false,
+        deleteState: false,
+        updateVisible: false,
+        updateState: false,
+        updateId: 0
+
+    };
+
+    handleSearch = (values) => {
+        axios.get('/api/admin/searchCommunity',{
+            params: values
+        }).then((res)=>{
+            const result = res.data.data;
+            this.setState({
+                data: result,
+            });
+            message.success("操作成功")
+        }).catch(error=>{
+            message.error("查询失败"+error)
+        })
+    };
+
+    getCommunity(){
+        axios.get('/api/admin/getCommunity').then((res) => {
+            const result = res.data.data;
+            this.setState({
+                data: result,
+            })
+        }).catch(err => {
+            message.error("获取用户列表失败"+err);
+        });
+    };
+
+    handleShowModal= () => {
+        this.setState({
+            visible: true,
+        })
+    };
+    handleCancel= () =>{
+        this.setState({
+            visible: false,
+        })
+    };
+    handleAddCommunity = (value) =>{
+        axios.post('/api/admin/addCommunity',value,{
+            contentType: "application/json charset=utf-8",
+        }).then((res =>{
+            this.setState({
+                visible: false,
+            })
+        })).catch(error => {
+            message.error("添加用户失败"+error);
+        })
+    };
+    handleUpdate= (id) =>{
+        this.setState({
+            updateId: id,
+            updateVisible: true,
+        })
+    };
+    handleDelete= (id) =>{
+
+        axios.delete('/api/admin/deleteCommunity',{
+            params: {
+                'id':id,
+            }
+        }).then((res) => {
+            message.success("删除成功");
+        }).catch(error => {
+            message.error("删除失败"+error);
+        })
+    };
+    handleCancelUpdate= () =>{
+        this.setState({
+            updateVisible: false,
+        })
+    };
+    handleUpdateCommunity=(values,id)=>{
+        console.log(id);
+        axios.post('/api/admin/updateCommunity',qs.stringify({
+            name: values.name,
+            description: values.description,
+            type: values.type,
+            id: id
+
+        })).then((res) => {
+            this.setState({
+                updateVisible: false
+            });
+            message.success("操作成功");
+        }).catch(error => {
+            message.error("操作失败"+error);
+        })
+    }
+
 
     componentWillMount() {
 
-        this.props.getCommunity();
-        console.log(this.props.data)
+        this.getCommunity();
+        console.log(this.state.data)
     }
 
 
@@ -54,9 +154,9 @@ class Community extends Component {
         ];
 
 
-
-        const {handleSearch,handleShowModal,handleAddCommunity,updateId,handleUpdate,handleCancel,handleDelete,handleCancelUpdate,handleUpdateCommunity} = this.props;
-        if(this.props.deleteState){return <Redirect to="/admin/community"/>}
+        const {updateId} = this.state;
+        const {handleSearch,handleShowModal,handleAddCommunity,handleUpdate,handleCancel,handleDelete,handleCancelUpdate,handleUpdateCommunity} = this;
+        if(this.state.deleteState){return <Redirect to="/admin/community"/>}
         return(
             <div className="communityList">
 
@@ -87,12 +187,12 @@ class Community extends Component {
                 <Table
                     columns={columns}
                     pagination={{ pageSize:6, position: [ 'bottomCenter'] }}
-                    dataSource={this.props.data}
+                    dataSource={this.state.data}
                 />
                 </Card>
 
                 <Modal
-                    visible={this.props.visible}
+                    visible={this.state.visible}
                     destroyOnClose={true}
                     title="添加社团"
                     onOk={()=>handleAddCommunity()}
@@ -101,7 +201,7 @@ class Community extends Component {
                         <Button key="back" onClick={()=>handleCancel()}>
                             取消
                         </Button>,
-                        <Button key="submit" type="primary" loading={this.props.loading} onClick={()=>handleAddCommunity(this.refs.communityForm.getFieldValue())}>
+                        <Button key="submit" type="primary" loading={this.state.loading} onClick={()=>handleAddCommunity(this.refs.communityForm.getFieldValue())}>
                             确定
                         </Button>,
 
@@ -159,7 +259,7 @@ class Community extends Component {
                 </Modal>
 
                 <Modal
-                    visible={this.props.updateVisible}
+                    visible={this.state.updateVisible}
                     destroyOnClose={true}
                     title="修改社团"
                     onOk={()=>handleUpdateCommunity()}
@@ -168,7 +268,7 @@ class Community extends Component {
                         <Button key="back" onClick={()=>handleCancelUpdate()}>
                             取消
                         </Button>,
-                        <Button key="submit" type="primary" loading={this.props.loading} onClick={()=>handleUpdateCommunity(this.refs.communityForm.getFieldValue(),updateId)}>
+                        <Button key="submit" type="primary" loading={this.state.loading} onClick={()=>handleUpdateCommunity(this.refs.communityForm.getFieldValue(),updateId+1)}>
                             确定
                         </Button>,
 
@@ -234,50 +334,4 @@ class Community extends Component {
     }
 
 }
-const mapState = (state) => ({
-    data: state.getIn(['community','data']),
-    visible: state.getIn(['community','visible']),
-    loading: state.getIn(['community','loading']),
-    deleteState: state.getIn(['community','deleteState']),
-    updateVisible: state.getIn(['community','updateVisible']),
-    updateState: state.getIn(['community','updateState']),
-    updateId: state.getIn(['community','updateId']),
-});
-const mapDispatch = (dispatch) => ({
-
-    getCommunity(){
-        dispatch(actionCreators.communityRequest())
-    },
-    handleUpdate(id){
-        console.log(id)
-        dispatch(actionCreators.handleUpdate(id))
-    },
-    handleSearch(value){
-        console.log(1)
-        dispatch(actionCreators.searchCommunity(value))
-    },
-    handleAddCommunity(values){
-        console.log(values)
-        dispatch(actionCreators.addCommunity(values))
-    },
-    handleShowModal(){
-        dispatch(actionCreators.handleShow())
-    },
-    handleCancel(){
-        dispatch(actionCreators.handleCancel())
-    },
-    handleDelete(id){
-        console.log(id)
-        dispatch(actionCreators.handleDelete(id))
-    },
-    handleCancelUpdate(){
-        dispatch(actionCreators.handleCancelUpdate())
-    },
-    handleUpdateCommunity(values,id){
-        console.log(values)
-        dispatch(actionCreators.handleUpdateCommunity(values,id))
-    }
-
-})
-
-export default connect(mapState,mapDispatch)(Community);
+export default Community;

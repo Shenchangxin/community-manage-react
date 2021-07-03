@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import store from "./store";
 import Index from "./pages/index";
 import Community from "./pages/community";
+import Activity from "./pages/activity";
 import User from "./pages/user";
 
 
@@ -21,6 +22,7 @@ export default class  IRouter extends React.Component {
                             <Route path="/login" component={Login} />
                             <Route path="/register" component={Register} />
                             <Route path="/index" component={Index} />
+                            <Route path="/activity/:id" component={Activity}/>
                             <Route path="/admin" render={()=>
                                 <Admin>
                                     <Switch>
